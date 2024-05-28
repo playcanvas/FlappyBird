@@ -141,6 +141,13 @@ export const createUI = (parent) => {
         /**
          * Create the Score text
          */
+        createEntity('Score', {
+            position: [0, 0.84, 0],
+            sprites: true,
+            scripts: [Score],
+            parent: gameScreen
+        });
+         
         const score = new Entity('Score');
         score.enabled = false;
         const display = [

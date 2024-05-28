@@ -1,4 +1,6 @@
-import { Entity, Script } from 'playcanvas';
+import { Entity, Script, Sprite } from 'playcanvas';
+
+const SCRIPT_DEFAULTS = { preloading: true };
 
 /**
  * @typedef {Object} EntityOptions
@@ -18,43 +20,47 @@ export const createEntity = (name, opts = {}) => {
 
     const entity = new Entity(name);
 
+    // Add as child
+    if(opts.parent && opts.parent instanceof Entity) opts.parent.addChild(entity);
+
     // Set position, rotation, and scale
     if (opts.position) entity.setLocalPosition(opts.position);
     if (opts.rotation) entity.setLocalEulerAngles(opts.rotation);
     if (opts.scale) entity.setLocalScale(opts.scale);
-
-    // Add sprites
-    if (opts.sprites) {
-        entity.addComponent('sprite');
-    }
 
     // Add camera
     if (opts.camera) {
         entity.addComponent('camera', opts.camera);
     }
 
+    // Add camera
+    if (opts.sprite) {
+        const sprite = new Sprite()
+        entity.addComponent('sprite', opts.sprite);
+    }
+
     // Add scripts
     if (opts.scripts) {
-        const script = entity.addComponent('script');
+        const component = entity.addComponent('script');
 
         // If scripts is an array, create each script
         if(Array.isArray(opts.scripts)) {
 
             // Create each script
-            opts.scripts.forEach(scriptClass => {
+            opts.scripts.forEach(script => {
 
                 // If the script is a class, create it
-                if(scriptClass instanceof Script) {
-                    script.create(script);
-                } else if(script.class instanceof Script) {
-                    script.create(script.class, script.options);
+                if(script.prototype instanceof Script) {
+                    component.create(script, SCRIPT_DEFAULTS);
+                } else if(script.class.prototype instanceof Script) {
+                    component.create(script.class, {
+                        ...SCRIPT_DEFAULTS,
+                        attributes: script.options
+                    });
                 }
             });
         }
     }
-
-    // Add children
-    if(opts.parent && opts.parent instanceof Entity) opts.parent.addChild(entity);
 
     return entity;
 

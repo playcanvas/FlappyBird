@@ -2,12 +2,12 @@ import { Script, KEY_SPACE, math } from "playcanvas";
 
 export class Bird extends Script {
 
-    static attributes = {
-        flapVelocity: { type: 'number', default: 1 },
-        gravity: { type: 'number', default: 5 },
-        lowestHeight: { type: 'number', default: 0.25 },
-        radius: { type: 'number', default: 0.068 }
-    }
+    // static attributes = {
+    //     flapVelocity: { type: 'number', default: 1 },
+    //     gravity: { type: 'number', default: 5 },
+    //     lowestHeight: { type: 'number', default: 0.25 },
+    //     radius: { type: 'number', default: 0.068 }
+    // }
 
     // initialize code called once per entity
     initialize() {
