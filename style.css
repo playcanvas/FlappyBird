@@ -33,7 +33,7 @@ body {
 }
 
 #canvas {
-  border-radius: 3.5rem;
+  border-radius: 5vh;
   height: 100%;
   aspect-ratio: 9 / 16;
   display: block;

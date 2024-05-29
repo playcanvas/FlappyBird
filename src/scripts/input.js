@@ -19,7 +19,8 @@ export class Input extends Script {
         var mouseDown = function (e) {
             e.preventDefault();
 
-            press(e.clientX, e.clientY);
+            // press(e.clientX, e.clientY);
+            press(e.offsetX, e.offsetY);
         };
         var touchStart = function (e) {
             e.preventDefault();

@@ -29,7 +29,7 @@ export const createCamera = (app) => {
 
 
     // Create the camera entity
-    return createEntity('camera', {
+    return createEntity('Camera', {
         position: [0, 0, 1], // Set the position of the camera
         camera: cameraComponentSettings, // Add camera component with settings
         scripts: [CameraAspect], // Add CameraAspect script

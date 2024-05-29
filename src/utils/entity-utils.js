@@ -1,6 +1,22 @@
-import { Entity, Script, Sprite } from 'playcanvas';
+import { Entity, Script, Sprite, Vec3, Application } from 'playcanvas';
 
-const SCRIPT_DEFAULTS = { preloading: true };
+const SCRIPT_DEFAULTS = { preloading: false };
+const SPRITE_DEFAULTS = {
+    enabled: true,
+    type: "simple",
+    width: 1,
+    height: 1,
+    color: [1, 1, 1],
+    opacity: 1,
+    flipX: false,
+    flipY: false,
+    frame: 0,
+    speed: 1,
+    batchGroupId: null,
+    drawOrder: 0,
+    autoPlayClip: null,
+    clips: {}
+}
 
 /**
  * @typedef {Object} EntityOptions
@@ -19,24 +35,44 @@ const SCRIPT_DEFAULTS = { preloading: true };
 export const createEntity = (name, opts = {}) => {
 
     const entity = new Entity(name);
+    const app = Application.getApplication();
 
     // Add as child
     if(opts.parent && opts.parent instanceof Entity) opts.parent.addChild(entity);
 
     // Set position, rotation, and scale
-    if (opts.position) entity.setLocalPosition(opts.position);
-    if (opts.rotation) entity.setLocalEulerAngles(opts.rotation);
-    if (opts.scale) entity.setLocalScale(opts.scale);
+    if (opts.position) entity.setLocalPosition(new Vec3(opts.position));
+    if (opts.rotation) entity.setLocalEulerAngles(new Vec3(opts.rotation));
+    if (opts.scale) entity.setLocalScale(new Vec3(opts.scale));
+    if (opts.enabled !== undefined) entity.enabled = opts.enabled
 
     // Add camera
     if (opts.camera) {
         entity.addComponent('camera', opts.camera);
     }
 
-    // Add camera
+    // Add Sprite
     if (opts.sprite) {
-        const sprite = new Sprite()
-        entity.addComponent('sprite', opts.sprite);
+        const { frameKeys, atlas, ...spriteOpts } = opts.sprite;
+        entity.addComponent('sprite', spriteOpts);
+        entity.sprite.sprite = new Sprite(
+            app.graphicsDevice, 
+            {
+                pixelsPerUnit: 100,
+                frameKeys, atlas
+            }
+        );
+    }
+
+    // Add sounds
+    if (opts.sounds ) {
+        const sound = entity.addComponent('sound');
+
+        // Add each sound
+        opts.sounds.entries().forEach(([key, asset]) => {
+            sound.addSlot(key, { asset });
+        });
+        
     }
 
     // Add scripts

@@ -31,7 +31,7 @@ export class TweenOptions {
      * Play tween on the specified event name. This event must be fired on the global application object (e.g. this.app.fire(\'eventname\');).
      * @type {string}
      */
-    event
+    event = ''
     
     /**
      * The path from the entity to the property. e.g. \'light.color\', \'camera.fov\' or \'script.vehicle.speed\'.

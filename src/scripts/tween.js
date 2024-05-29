@@ -20,9 +20,9 @@ export class Tween extends Script {
         this.tweenCallbacks = [];
 
         var makeStartCallback = function (i) {  
-        return function() {  
-            this.start(i);
-        };
+            return function() {  
+                this.start(i);
+            };
         };
 
         for (i = 0; i < this.tweens.length; i++) {
@@ -30,7 +30,7 @@ export class Tween extends Script {
             if (tween.autoPlay) {
                 this.start(i);
             }
-            if (tween.event.length > 0) {
+            if (tween.event?.length > 0) {
                 this.tweenCallbacks[i] = {
                     event: tween.event,
                     cb: makeStartCallback(i)
