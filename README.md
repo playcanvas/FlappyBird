@@ -1,6 +1,6 @@
 ![Flappy Bird](/public/images/gh-header.png)
 
-**An engine only port of the popular game Flappy Bird made using in [PlayCanvas](https://github.com/playcanvas/engine) with extra [PWA](https://web.dev/explore/progressive-web-apps) goodness.**
+**An ES Module, engine only port of the popular game Flappy Bird made using in [PlayCanvas](https://github.com/playcanvas/engine) with extra [PWA](https://web.dev/explore/progressive-web-apps) goodness.**
 
 It's an installable, engine only, editor-less, pure code example of using PlayCanvas for a game. Most of the setup code can be found in the [game](./src/game.js) and [ui](./src/ui.js). All the gmaez logic is using ESM Scripts found in the [scripts](./src/scripts/) dir.
 
