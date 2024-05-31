@@ -1,4 +1,4 @@
-import { Entity, Vec4, SPRITETYPE_ANIMATED } from "playcanvas";
+import { Entity, Vec4, SPRITETYPE_ANIMATED, Sprite } from "playcanvas";
 import { Tween } from "./scripts/tween.js";
 import { EasingType, Easing } from "./scripts/tween-config.js";
 import { Button } from "./scripts/button.js";
@@ -195,22 +195,31 @@ export const createUI = async (app) => {
             }],
             parent: gameScreen
         });
-        // const playButton = new Entity('Play Button');
-        // playButton.enabled = false;
-        // playButton.addComponent('sprite');
-        // playButton.addComponent('script').create(Button, {
-        //     displacement: 0.0039063,
-        //     event: 'game:unpause'
-        // });
-        // gameScreen.addChild(playButton);
 
         /**
          * Create the Score text
          */
+        const display = [
+            createEntity('Digit 0', { sprite: { layers }, position: [-0.24, 0, 0] }),
+            createEntity('Digit 1', { sprite: { layers }, position: [-0.16, 0, 0] }),
+            createEntity('Digit 2', { sprite: { layers }, position: [-0.08, 0, 0] }),
+            createEntity('Digit 3', { sprite: { layers }, position: [0, 0, 0] }),
+        ]
+
+        const numbers = ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29']
+            .map(key => new Sprite( app.graphicsDevice, { pixelsPerUnit: 100, frameKeys: [key], atlas, layers }));
+
         createEntity('Score', {
-            enabled: false,
-            position: [0, 0.84, 0],
-            scripts: [Score],
+            position: [0, 0.86, 0],
+            scripts: [{
+                class: Score,
+                options: {
+                    name: 'score',
+                    display,
+                    numbers
+                }
+            }],
+            children: display,
             parent: gameScreen
         });
          

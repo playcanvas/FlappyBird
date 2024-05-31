@@ -4,9 +4,9 @@ export class PipeHeight extends Script {
     initialize() {
         var app = this.app;
 
-        this.pipe1 = app.root.findByName('Pipe 1');
-        this.pipe2 = app.root.findByName('Pipe 2');
-        this.pipe3 = app.root.findByName('Pipe 3');
+        // this.pipe1 = app.root.findByName('Pipe 1');
+        // this.pipe2 = app.root.findByName('Pipe 2');
+        // this.pipe3 = app.root.findByName('Pipe 3');
 
         this.heights = [];
         this.heights.push((Math.random() - 0.5) * 0.8 + 0.1);
@@ -22,6 +22,15 @@ export class PipeHeight extends Script {
     }
 
     setPipeHeights () {
+
+        // this.pipe1 = this.pipe1 ?? app.root.findByName('Pipe 1');
+        // this.pipe2 = this.pipe2 ?? app.root.findByName('Pipe 2');
+        // this.pipe3 = this.pipe3 ?? app.root.findByName('Pipe 3');
+
+        // if(!this.pipe1 || !this.pipe2 || !this.pipe3) {
+        //     return;
+        // }
+
         var pos;
         pos = this.pipe1.getLocalPosition();
         this.pipe1.setLocalPosition(pos.x, this.heights[0], pos.z);

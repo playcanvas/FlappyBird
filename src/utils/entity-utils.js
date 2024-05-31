@@ -45,13 +45,17 @@ export const createEntity = (name, opts = {}) => {
     if (opts.sprite) {
         const { frameKeys, atlas, ...spriteOpts } = opts.sprite;
         entity.addComponent('sprite', spriteOpts);
-        entity.sprite.sprite = new Sprite(
-            app.graphicsDevice, 
-            {
-                pixelsPerUnit: 100,
-                frameKeys, atlas
-            }
-        );
+
+        // If frameKeys and atlas exist, create a sprite
+        if(frameKeys && atlas) {
+            entity.sprite.sprite = new Sprite(
+                app.graphicsDevice, 
+                {
+                    pixelsPerUnit: 100,
+                    frameKeys, atlas
+                }
+            );
+        }
     }
 
     // Add sounds

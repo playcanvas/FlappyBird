@@ -1,4 +1,4 @@
-import { Script } from 'playcanvas';
+import { Script, Sprite } from 'playcanvas';
 
 export class Score extends Script {
     /**
@@ -14,7 +14,7 @@ export class Score extends Script {
 
     /**
      * @attribute
-     * @type {pc.Asset[]}
+     * @type {pc.Asset[] | pc.Sprite[]}
      * @assetType sprite
      */
     numbers
@@ -47,7 +47,8 @@ export class Score extends Script {
                 var spriteIdx = splitScore[idx];
                 digit.enabled = spriteIdx !== -1;
                 if (spriteIdx !== -1) {
-                    digit.sprite.sprite = numbers[spriteIdx].resource;
+                    const spriteOrAsset = numbers[spriteIdx];
+                    digit.sprite.sprite = spriteOrAsset instanceof Sprite ? spriteOrAsset : spriteOrAsset.resource;
                 }
             });
         }, this);

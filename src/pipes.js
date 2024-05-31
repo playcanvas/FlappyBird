@@ -28,58 +28,63 @@ export const createPipes = async (app) => {
     }
 
     const pipeTopOpts = { 
-        position: [0, -0.9, 0],
-        tags: ['pipe'],
-        sprite: {
-            ...spriteDefaults,
-            frameKeys: [ "30" ],
-        }
-    }
-
-    const pipeBottomOpts = {
         position: [0, 0.9, 0],
         tags: ['pipe'],
         sprite: {
             ...spriteDefaults,
-            frameKeys: [ "29" ]
+            frameKeys: [ "29" ],
         }
     }
 
-    const pipes1 = createEntity('Pipe 1', {
+    const pipeBottomOpts = {
+        position: [0, -0.9, 0],
+        tags: ['pipe'],
+        sprite: {
+            ...spriteDefaults,
+            frameKeys: [ "30" ]
+        }
+    }
+
+
+
+    const pipe1 = createEntity('Pipe 1', {
         position: [-0.8, 0, 0],
+        children: [
+            createEntity('Pipe Top', pipeTopOpts ),
+            createEntity('Pipe Bottom', pipeBottomOpts )
+        ],
+    })
+    
+    const pipe2 = createEntity('Pipe 2', {
         scripts: [{ class: AddToScore, options: { bird }}],
         children: [
             createEntity('Pipe Top', pipeTopOpts ),
             createEntity('Pipe Bottom', pipeBottomOpts )
-        ]
+        ],
     })
-
-    const pipes2 = createEntity('Pipe 2', {
-        scripts: [{ class: AddToScore, options: { bird }}],
-        children: [
-            createEntity('Pipe Top', pipeTopOpts ),
-            createEntity('Pipe Bottom', pipeBottomOpts )
-        ]
-    })
-
-    const pipes3 = createEntity('Pipe 3', {
+    
+    const pipe3 = createEntity('Pipe 3', {
         position: [0.8, 0, 0],
+        scripts: [{ class: AddToScore, options: { bird }}],
         children: [
             createEntity('Pipe Top', pipeTopOpts ),
             createEntity('Pipe Bottom', pipeBottomOpts )
-        ]
+        ],
     })
 
     const pipes = createEntity('Pipes', {
         position: [1.7, 0.1, 0],
-        children: [pipes1, pipes2, pipes3],
+        // scripts: [{ class: AddToScore, options: { bird, pipe1, pipe2, pipe3 }}],
+        children: [pipe1, pipe2, pipe3],
         scripts: [
             { class: Scroll, options: scrollDefaults }, 
-            PipeHeight
+            { class: PipeHeight, options: { bird, pipe1, pipe2, pipe3 }}
         ],
         parent,
     });
 
+    // Late initialize
+    // pipes.script.pipeHeight.initialize();
 
     return pipes;
 }
