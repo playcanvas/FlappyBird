@@ -33,8 +33,6 @@ body {
   justify-content: center;
   align-items: center;
 
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.7);
-
   padding-top: env(safe-area-inset-top);
   padding-right: env(safe-area-inset-right);
   padding-bottom: env(safe-area-inset-bottom);
@@ -58,7 +56,7 @@ body {
 
   #canvas {
       border-radius: 6vh;
-      box-shadow: 0.9vh 0.9vh 0px 0px rgb(224 200 169);
+      box-shadow: 1.2vh 1.2vh 1px 0px rgb(224 200 169 / 53%);
       max-width: min-content;
   }
 }

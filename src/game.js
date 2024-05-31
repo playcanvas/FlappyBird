@@ -83,7 +83,7 @@ export const createGame = async (app) => {
      */ 
     createEntity('Ground', {
         parent: game,
-        position: [0, -1, 0],
+        position: [0, -1.001, 0],
         sprite: {
             frameKeys: [ "2" ],
             atlas,

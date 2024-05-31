@@ -4,12 +4,15 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   plugins: [
     VitePWA({ 
-        registerType: 'autoUpdate' 
+        registerType: 'autoUpdate',
+        workbox: {
+            globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        } 
     })
   ],
   resolve: {
       alias: {
-          playcanvas: "http://localhost:51000/playcanvas.dbg.mjs"
+          playcanvas: "https://esm.sh/gh/playcanvas/engine@865fd8041c/src/index.js"
       }
   }
 })
