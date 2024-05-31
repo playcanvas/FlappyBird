@@ -1,17 +1,17 @@
+import { TouchDevice, Layer, Keyboard, SORTMODE_MANUAL, Application, FILLMODE_NONE, RESOLUTION_AUTO } from 'playcanvas';
 import { createGame } from './src/game';
 import { createUI } from './src/ui';
 import { createCamera } from './src/camera';
+import * as TWEEN from '@tweenjs/tween.js';
 import './style.css'
-import { Layer, Keyboard, SORTMODE_MANUAL, Application, Color, Entity, TextureAtlasHandler, FILLMODE_NONE, RESOLUTION_FIXED, RESOLUTION_AUTO, RenderComponentSystem, ScriptComponentSystem, ScriptType, DEVICETYPE_WEBGPU, createGraphicsDevice, LightComponentSystem, DEVICETYPE_WEBGL2, AppBase } from 'playcanvas';
-import { loadSound, loadSoundMap } from './src/utils/sounds-utils';
 
 const canvas = document.querySelector('#canvas');
 
 // create a PlayCanvas application
 const app = new Application(canvas, {
-  keyboard: new Keyboard(window)
+  keyboard: new Keyboard(window),
+  touch: new TouchDevice(window),
 });
-// app.init(createOptions)
 
 // Create a new layer
 var spriteLayer = new Layer({
@@ -26,16 +26,18 @@ app.scene.layers.pushTransparent(spriteLayer);
 app.setCanvasFillMode(FILLMODE_NONE);
 app.setCanvasResolution(RESOLUTION_AUTO);
 
-// Pump up the resolution for hi-DPI devices
-// app.graphicsDevice.devicePixelRatio = Math.max(2, globalThis.devicePixelRatio)
+// Update tween
+app.on('update', _ => app.timeScale > 0 && TWEEN.update() );
 
+// ensure canvas is resized when window changes size
+window.addEventListener('resize', () => app.resizeCanvas());
+
+
+// Create the game entities
 createCamera(app);
 createGame(app);
 createUI(app);
 
-window.app = app
-
-// // ensure canvas is resized when window changes size
-window.addEventListener('resize', () => app.resizeCanvas());
+window.app = app;
 
 app.start();

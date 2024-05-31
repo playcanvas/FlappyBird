@@ -1,16 +1,45 @@
 import { Script } from 'playcanvas';
 
 export class Scroll extends Script {
-    // static attributes = {
-    //     startEvent: { type: 'string', default: 'start' },
-    //     stopEvent: { type: 'string', default: 'stop' },
-    //     resetEvent: { type: 'string', default: 'reset' },
-    //     cycleEvent: { type: 'string', default: 'cycle' },
-    //     startX: { type: 'number', default: 1 },
-    //     endX: { type: 'number', default: -1 },
-    //     speed: { type: 'number', default: 1 },
-    //     frozen: { type: 'boolean', default: false }
-    // };
+    /**
+     * @attribute
+     */
+    startEvent = 'start'
+
+    /**
+     * @attribute
+     */
+    stopEvent = 'stop'
+
+    /**
+     * @attribute
+     */
+    resetEvent = 'reset'
+
+    /**
+     * @attribute
+     */
+    cycleEvent = 'cycle'
+
+    /**
+     * @attribute
+     */
+    startX = 1
+
+    /**
+     * @attribute
+     */
+    endX = 1
+
+    /**
+     * @attribute
+     */
+    speed = 1
+
+    /**
+     * @attribute
+     */
+    frozen = false
 
     initialize() {
         var app = this.app;

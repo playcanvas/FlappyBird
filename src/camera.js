@@ -12,18 +12,18 @@ export const createCamera = (app) => {
 
     // Camera component settings
     const cameraComponentSettings = {
-        "projection": 1,
-        "farClip": 2,
-        "rect": [0, 0, 1, 1],
-        "priority": 0,
-        "fov": 45,
-        "clearDepthBuffer": false,
-        "clearColor": [0, 0, 0, 1],
-        "enabled": true,
-        "orthoHeight": 1.28,
-        "nearClip": 0,
-        "clearColorBuffer": true,
-        "frustumCulling": false,
+        projection: 1,
+        farClip: 2,
+        rect: [0, 0, 1, 1],
+        priority: 0,
+        fov: 45,
+        clearDepthBuffer: false,
+        clearColor: [250, 235, 215, 1],
+        enabled: true,
+        orthoHeight: 1.28,
+        nearClip: 0,
+        clearColorBuffer: true,
+        frustumCulling: false,
         layers: [layer]
     }
 

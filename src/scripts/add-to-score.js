@@ -8,10 +8,6 @@ export class AddToScore extends Script {
      */
     bird
 
-    // static attributes = {
-    //     bird: { type: 'entity' }
-    // };
-
     initialize() {
         this.lastX = this.entity.getPosition().x;
     };

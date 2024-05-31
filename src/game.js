@@ -20,7 +20,7 @@ export const createGame = async (app) => {
         Flap: '/audio/sfx_wing.mp3',
         Hit: '/audio/sfx_hit.mp3',
         Die: '/audio/sfx_die.mp3'
-    });
+    }, app);
       
     const sounds = new Map(soundMap);
 
@@ -50,6 +50,7 @@ export const createGame = async (app) => {
      * Create the bird entity
      */
     createEntity('Bird', {
+        position: [-0.3, 0.16, 0],
         enabled: false,
         sprite: {
             frameKeys: [ "26", "27", "28", "27" ],
@@ -70,10 +71,11 @@ export const createGame = async (app) => {
         parent: game
     })
 
-    // /**
-    //  * Create the Pipes Entity
-    //  */
-    // createPipes(app)
+    /**
+     * Create the Pipes Entity
+     */
+    const pipes = await createPipes(app)
+    game.addChild(pipes);
 
 
     /**

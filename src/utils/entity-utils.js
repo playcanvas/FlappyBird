@@ -1,22 +1,7 @@
-import { Entity, Script, Sprite, Vec3, Application } from 'playcanvas';
+import { Entity, Sprite, Vec3, Application } from 'playcanvas';
 
 const SCRIPT_DEFAULTS = { preloading: false };
-const SPRITE_DEFAULTS = {
-    enabled: true,
-    type: "simple",
-    width: 1,
-    height: 1,
-    color: [1, 1, 1],
-    opacity: 1,
-    flipX: false,
-    flipY: false,
-    frame: 0,
-    speed: 1,
-    batchGroupId: null,
-    drawOrder: 0,
-    autoPlayClip: null,
-    clips: {}
-}
+const toLowerCamelCase = (str) => str[0].toLowerCase() + str.slice(1);
 
 /**
  * @typedef {Object} EntityOptions
@@ -26,7 +11,7 @@ const SPRITE_DEFAULTS = {
  */
 
 /**
- * Creates an entity with the given name and options.
+ * Convenience function to create an entity with various components.
  * 
  * @param {string} name - The name of the entity.
  * @param {EntityOptions} opts - The options for the entity.
@@ -37,14 +22,19 @@ export const createEntity = (name, opts = {}) => {
     const entity = new Entity(name);
     const app = Application.getApplication();
 
-    // Add as child
+    // Add to parent, and add any children
     if(opts.parent && opts.parent instanceof Entity) opts.parent.addChild(entity);
+    if(opts.children && Array.isArray(opts.children)) {
+        opts.children.forEach(child => entity.addChild(child));    
+    }
 
     // Set position, rotation, and scale
     if (opts.position) entity.setLocalPosition(new Vec3(opts.position));
     if (opts.rotation) entity.setLocalEulerAngles(new Vec3(opts.rotation));
     if (opts.scale) entity.setLocalScale(new Vec3(opts.scale));
     if (opts.enabled !== undefined) entity.enabled = opts.enabled
+    if (opts.tags && Array.isArray(opts.tags)) opts.tags.forEach(tag => entity.tags.add(tag));
+
 
     // Add camera
     if (opts.camera) {
@@ -69,8 +59,8 @@ export const createEntity = (name, opts = {}) => {
         const sound = entity.addComponent('sound');
 
         // Add each sound
-        opts.sounds.entries().forEach(([key, asset]) => {
-            sound.addSlot(key, { asset });
+        opts.sounds.forEach((asset, key) => {
+            sound.addSlot(key, { asset }).load();
         });
         
     }
@@ -82,18 +72,23 @@ export const createEntity = (name, opts = {}) => {
         // If scripts is an array, create each script
         if(Array.isArray(opts.scripts)) {
 
+            
             // Create each script
             opts.scripts.forEach(script => {
 
-                // If the script is a class, create it
-                if(script.prototype instanceof Script) {
-                    component.create(script, SCRIPT_DEFAULTS);
-                } else if(script.class.prototype instanceof Script) {
-                    component.create(script.class, {
-                        ...SCRIPT_DEFAULTS,
-                        attributes: script.options
-                    });
-                }
+                // If script is a class, create an instance
+                const scriptName = toLowerCamelCase(script.class?.name ?? script.name);
+                
+                // When the script is created, initialize it with the necessary attributes
+                component.on(`create:${scriptName}`, scriptInstance => {
+                    // If attributes exist assign them to the instance
+                    const attributes = script.options || {};
+                    Object.assign(scriptInstance, attributes);
+                });
+                
+                // Create the script
+                component.create(script.class ?? script, SCRIPT_DEFAULTS);
+
             });
         }
     }

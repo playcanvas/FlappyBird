@@ -1,10 +1,17 @@
 import { Script } from 'playcanvas';
 
 export class Enable extends Script {
-    static attributes = {
-        enableEvent: { type: 'string' },
-        disableEvent: { type: 'string' }
-    };
+    /**
+     * @attribute
+     * @type {string}
+     */
+    enableEvent;
+
+    /**
+     * @attribute
+     * @type {string}
+     */
+    disableEvent
 
     initialize() {
         this.app.on(this.enableEvent, () => {

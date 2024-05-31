@@ -1,4 +1,4 @@
-import { Entity } from "playcanvas";
+import { SPRITETYPE_SIMPLE } from "playcanvas";
 import { Scroll } from "/src/scripts/scroll.js";
 import { PipeHeight } from "/src/scripts/pipe-height.js";
 import { AddToScore } from "/src/scripts/add-to-score.js";
@@ -16,48 +16,70 @@ const scrollDefaults = {
     frozen: true
 }
 
-export const createPipes = (app) => {
+export const createPipes = async (app) => {
 
     const parent = app.root;
-    const atlas = getAtlas(app);
-    const bird = app.root.findByName('bird')
+    const atlas = await getAtlas(app);
+    const bird = app.root.findByName('Bird')
+    const layers = [app.scene.layers.getLayerByName("Sprite").id];
 
-    const pipes = createEntity('pipes', {
+    const spriteDefaults = {
+        atlas, type: SPRITETYPE_SIMPLE, layers, drawOrder: 1
+    }
+
+    const pipeTopOpts = { 
+        position: [0, -0.9, 0],
+        tags: ['pipe'],
+        sprite: {
+            ...spriteDefaults,
+            frameKeys: [ "30" ],
+        }
+    }
+
+    const pipeBottomOpts = {
+        position: [0, 0.9, 0],
+        tags: ['pipe'],
+        sprite: {
+            ...spriteDefaults,
+            frameKeys: [ "29" ]
+        }
+    }
+
+    const pipes1 = createEntity('Pipe 1', {
+        position: [-0.8, 0, 0],
+        scripts: [{ class: AddToScore, options: { bird }}],
+        children: [
+            createEntity('Pipe Top', pipeTopOpts ),
+            createEntity('Pipe Bottom', pipeBottomOpts )
+        ]
+    })
+
+    const pipes2 = createEntity('Pipe 2', {
+        scripts: [{ class: AddToScore, options: { bird }}],
+        children: [
+            createEntity('Pipe Top', pipeTopOpts ),
+            createEntity('Pipe Bottom', pipeBottomOpts )
+        ]
+    })
+
+    const pipes3 = createEntity('Pipe 3', {
+        position: [0.8, 0, 0],
+        children: [
+            createEntity('Pipe Top', pipeTopOpts ),
+            createEntity('Pipe Bottom', pipeBottomOpts )
+        ]
+    })
+
+    const pipes = createEntity('Pipes', {
         position: [1.7, 0.1, 0],
+        children: [pipes1, pipes2, pipes3],
         scripts: [
-            { class: Scroll, options: scrollDefaults}, 
+            { class: Scroll, options: scrollDefaults }, 
             PipeHeight
         ],
         parent,
     });
 
-    createEntity('Pipe 1', {
-        position: [-0.8, 0, 0],
-        parent: pipes,
-        scripts: [{ class: AddToScore, options: { bird }}],
-        children: [
-            createEntity('pipe top'),
-            createEntity('pipe bottom')
-        ]
-    })
-
-    createEntity('Pipe 2', {
-        parent: pipes,
-        scripts: [{ class: AddToScore, options: { bird }}],
-        children: [
-            createEntity('pipe top', { position: [0, -0.9, 0] }),
-            createEntity('pipe bottom', { position: [0, 0.9, 0] })
-        ]
-    })
-
-    createEntity('Pipe 3', {
-        position: [0.8, 0, 0],
-        parent: pipes,
-        children: [
-            createEntity('pipe top', { position: [0, -0.9, 0] }),
-            createEntity('pipe bottom', { position: [0, 0.9, 0] })
-        ]
-    })
 
     return pipes;
 }

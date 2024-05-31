@@ -80,7 +80,7 @@ export const createUI = async (app) => {
     
                 type: SPRITETYPE_ANIMATED,
                 layers,
-                drawOrder: 2,
+                drawOrder: 4,
                 autoPlayClip: "Flap",
                 clips: {
                     0: { name: "Flap", fps: 10, loop: true, }
@@ -159,29 +159,30 @@ export const createUI = async (app) => {
     ui.addChild(gameScreen);
 
     {
-        // /**
-        //  * Create the Pause button
-        //  */
-        // createEntity('Pause Button', {
-        //     position: [0.53, 0.84, 0],
-        //     sprites: {
-        //         frameKeys: [ "18" ],
-        //         atlas,
-        //         layers,
-        //         drawOrder: 4
-        //     },
-        //     scripts: [{
-        //         class: Button,
-        //         options: { displacement: 0.0039063, event: 'game:pause' }
-        //     }],
-        //     parent: gameScreen
-        // });
+        /**
+         * Create the Pause button
+         */
+        createEntity('Pause Button', {
+            position: [-0.53, 0.84, 0],
+            sprite: {
+                frameKeys: [ "18" ],
+                atlas,
+                layers,
+                drawOrder: 4
+            },
+            scripts: [{
+                class: Button,
+                options: { displacement: 0.0039063, event: 'game:pause' }
+            }],
+            parent: gameScreen
+        });
 
         /**
          * Create the Play button
          */
         createEntity('Play Button', {
-            position: [0.53, 0.84, 0],
+            enabled: false,
+            position: [-0.53, 0.84, 0],
             sprite: {
                 frameKeys: [ "19" ],
                 atlas,
@@ -207,71 +208,111 @@ export const createUI = async (app) => {
          * Create the Score text
          */
         createEntity('Score', {
+            enabled: false,
             position: [0, 0.84, 0],
-            sprites: true,
             scripts: [Score],
             parent: gameScreen
         });
          
-        const score = new Entity('Score');
-        score.enabled = false;
-        const display = [
-            new Entity('Digit 0'),
-            new Entity('Digit 1'),
-            new Entity('Digit 2'),
-            new Entity('Digit 3'),
-        ].forEach(child => score.addChild(child))
+        // const score = new Entity('Score');
+        // score.enabled = false;
+        // const display = [
+        //     new Entity('Digit 0'),
+        //     new Entity('Digit 1'),
+        //     new Entity('Digit 2'),
+        //     new Entity('Digit 3'),
+        // ].forEach(child => score.addChild(child))
 
-        const numbers = [
-            // new Entity('Digit 0'),
-            // new Entity('Digit 1'),
-            // new Entity('Digit 2'),
-            // new Entity('Digit 3'),
-        ]
+        // const numbers = [
+        //     // new Entity('Digit 0'),
+        //     // new Entity('Digit 1'),
+        //     // new Entity('Digit 2'),
+        //     // new Entity('Digit 3'),
+        // ]
 
-        score.addComponent('script').create(Score, {
-            name: 'score',
-            display,
-            numbers
-        });
-        gameScreen.addChild(score);
+        // score.addComponent('script').create(Score, {
+        //     name: 'score',
+        //     display,
+        //     numbers
+        // });
+        // gameScreen.addChild(score);
 
         /**
          * Create the Get Ready text
          */
-        const getReady = new Entity('Get Ready');
-        getReady.enabled = false;
-        getReady.addComponent('sprite');
-        getReady.addComponent('script')
-        getReady.script.create(Tween, {
-            tweens: [
-                {
-                    autoPlay: true,
-                    event: 'ui:fadegetready',
-                    path: 'sprite.opacity',
-                    start: new Vec4(1),
-                    end: new Vec4(0),
-                    easingFunction: Easing.Linear,
-                    easingType: EasingType.Out,
-                    duration: 250,
-                    repeat: 1,
-                    yoyo: true,
-                    repeatEvent: 'disable:getready'
+        createEntity('Get Ready', {
+            sprite: {
+                frameKeys: [ "6" ], atlas, layers, drawOrder: 4
+            },
+            scripts: [{
+                class: Tween,
+                options: {
+                    tweens: [
+                        {
+                            autoPlay: false,
+                            event: 'ui:fadegetready',
+                            path: 'sprite.opacity',
+                            start: new Vec4(1),
+                            end: new Vec4(0),
+                            easingFunction: Easing.Linear,
+                            easingType: EasingType.Out,
+                            delay: 0,
+                            duration: 250,
+                            repeat: 1,
+                            repeatDelay: 0,
+                            yoyo: true,
+                            repeatEvent: 'disable:getready'
+                        }
+                    ]
                 }
-            ]
+            }, 
+            {
+                class: Enable,
+                options: {
+                    enableEvent: 'game:getready',
+                    disableEvent: 'disable:getready'
+                }
+            }],
+            parent: gameScreen
         });
-        getReady.script.create(Enable, {
-            enableEvent: 'game:getready',
-            disableEvent: 'disable:getready'
-        })
-        gameScreen.addChild(getReady);
+
+        // const getReady = new Entity('Get Ready');
+        // getReady.enabled = false;
+        // getReady.addComponent('sprite');
+        // getReady.addComponent('script')
+        // getReady.script.create(Tween, {
+        //     tweens: [
+        //         {
+        //             autoPlay: true,
+        //             event: 'ui:fadegetready',
+        //             path: 'sprite.opacity',
+        //             start: new Vec4(1),
+        //             end: new Vec4(0),
+        //             easingFunction: Easing.Linear,
+        //             easingType: EasingType.Out,
+        //             duration: 250,
+        //             repeat: 1,
+        //             yoyo: true,
+        //             repeatEvent: 'disable:getready'
+        //         }
+        //     ]
+        // });
+        // getReady.script.create(Enable, {
+        //     enableEvent: 'game:getready',
+        //     disableEvent: 'disable:getready'
+        // })
+        // gameScreen.addChild(getReady);
 
         /**
          * Create the Tap text
          */
         createEntity('Tap', {
-            enabled: false,
-            sprite: {},
+            sprite: {
+                frameKeys: [ "31" ],
+                atlas,
+                layers,
+                drawOrder: 4
+            },
             scripts: [
                 {
                     class: Tween,
@@ -287,7 +328,7 @@ export const createUI = async (app) => {
                             duration: 250,
                             repeat: 1,
                             yoyo: true,
-                            repeatEvent: 'disable:tap'
+                            repeatEvent: 'disable:getready'
                         }]
                     }
                 }, 
@@ -295,7 +336,7 @@ export const createUI = async (app) => {
                     class: Enable,
                     options: {
                         enableEvent: 'game:getready',
-                        disableEvent: 'disable:tap'
+                        disableEvent: 'disable:getready'
                     }
                 }
             ],
@@ -344,8 +385,13 @@ export const createUI = async (app) => {
          * Create the Game Over text
          */
         createEntity('Game Over', {
-            position: [0, 0.5, 0],
-            sprite: {},
+            position: [0, 0.522, 0],
+            sprite: {
+                frameKeys: [ "5" ],
+                atlas,
+                layers,
+                drawOrder: 4
+            },
             scripts: [{
                 class: Tween, 
                 options: { 
@@ -421,7 +467,7 @@ export const createUI = async (app) => {
          * Create the Ok button
          */
         createEntity('OK Button', {
-            position: [0, -0.5, 0],
+            position: [-0.31, -0.583, 0],
             sprite: {
                 frameKeys: [ "13" ],
                 atlas,
@@ -447,8 +493,7 @@ export const createUI = async (app) => {
          * Create the Share button
          */
         createEntity('Share Button', {
-            position: [0.31, -0.5, 0],
-            enabled: false,
+            position: [0.31, -0.583, 0],
             sprite: {
                 frameKeys: [ "16" ],
                 atlas,
@@ -474,8 +519,12 @@ export const createUI = async (app) => {
          * Create the Scoreboard
          */
         const scoreboard = createEntity('Scoreboard', {
-            enabled: false,
-            sprite: {},
+            sprite: {
+                frameKeys: [ "3" ],
+                atlas,
+                layers,
+                drawOrder: 4
+            },
             scripts: [
                 Scoreboard, 
                 {
@@ -531,8 +580,8 @@ export const createUI = async (app) => {
              */
             createEntity('Medal', {
                 enabled: false,
-                sprites: true,
-                children: [createMedal()],
+                // sprites: true,
+                children: [await createMedal(app)],
                 parent: scoreboard
             });
             // const medal = createMedal();
@@ -543,7 +592,6 @@ export const createUI = async (app) => {
              * Create the Current Score
              */
             createEntity('Current Score', {
-                sprites: true,
                 scripts: [{
                     class: Score,
                     options: {
@@ -578,7 +626,11 @@ export const createUI = async (app) => {
              */
             createEntity('New', {
                 enabled: false,
-                sprite: {},
+                sprite: {
+                    frameKeys: [ "7" ],
+                    atlas,
+                    layers,
+                },
                 parent: scoreboard
             });
             // const newScore = new Entity('New');
@@ -590,7 +642,6 @@ export const createUI = async (app) => {
              * Create the Best Score
              */
             createEntity('Best Score', {
-                sprites: true,
                 scripts: [{
                     class: Score,
                     options: {

@@ -1,10 +1,15 @@
-// import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
 
-export default {
-    "resolve": {
-        "alias": {
-            "__playcanvas": "https://esm.sh/gh/playcanvas/engine@b6bc0d5bc34dbb531e552f674d5199849ac380ef/src/index.js",
-            "playcanvas": "http://localhost:51000/playcanvas.dbg.mjs"
-        }
-    }
-};
+export default defineConfig({
+  plugins: [
+    VitePWA({ 
+        registerType: 'autoUpdate' 
+    })
+  ],
+  resolve: {
+      alias: {
+          playcanvas: "http://localhost:51000/playcanvas.dbg.mjs"
+      }
+  }
+})

@@ -1,11 +1,23 @@
 import { Script } from 'playcanvas';
 
 export class Score extends Script {
-    static attributes = {
-        name: { type: 'string', default: 'score' },
-        display: { type: 'entity', array: true },
-        numbers: { type: 'asset', assetType: 'sprite', array: true }
-    };
+    /**
+     * @attribute
+     */
+    name = 'score';
+
+    /**
+     * @attribute
+     * @type {pc.Entity[]}
+     */
+    display;
+
+    /**
+     * @attribute
+     * @type {pc.Asset[]}
+     * @assetType sprite
+     */
+    numbers
 
     initialize() {
         var app = this.app;

@@ -63,7 +63,7 @@ export class Game extends Script {
             app.fire('ui:fadegetready');
         }, this);
 
-        app.on('game:pause', function () {
+        app.on('game:pause', () => {
             app.root.findByName('Pause Button').enabled = false;
             app.root.findByName('Play Button').enabled = true;
         }, this);

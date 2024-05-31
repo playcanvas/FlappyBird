@@ -1,9 +1,10 @@
 import { Script } from 'playcanvas';
 
 export class Sparkle extends Script {
-    static attributes = {
-        radius: { type: 'number', default: 1 }
-    };
+    /**
+     * @attribute
+     */
+    radius = 1;
 
     initialize() {
         this.initialPos = this.entity.getLocalPosition().clone();

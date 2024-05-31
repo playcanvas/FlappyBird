@@ -1,10 +1,17 @@
 import { Script, Vec3 } from 'playcanvas';
 
 export class Button extends Script {
-    static attributes = {
-        diplacement: { type: 'number', default: 0.00390625 },
-        event: { type: 'string' }
-    };
+    
+    /**
+     * @attribute
+     */
+    diplacement = 0.00390625;
+
+    /**
+     * @attribute
+     * @type {string}
+     */
+    event;
 
     // initialize code called once per entity
     initialize() {
@@ -57,7 +64,7 @@ export class Button extends Script {
     press(x, y, obj) {
         if (this.checkForClick(x, y)) {
             this.pressed = true;
-            this.entity.translate(0, -this.diplacement, 0);
+            this.entity.translate(0, -this.displacement, 0);
 
             // This event has been intercepted by a button - don't send it on to the game
             obj.processed = true;
@@ -69,7 +76,7 @@ export class Button extends Script {
 
         if (this.pressed) {
             this.pressed = false;
-            this.entity.translate(0, this.diplacement, 0);
+            this.entity.translate(0, this.displacement, 0);
             app.fire(this.event);
             app.fire('game:audio', 'Swoosh');
         }

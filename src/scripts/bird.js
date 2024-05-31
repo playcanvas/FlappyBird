@@ -2,19 +2,32 @@ import { Script, KEY_SPACE, math } from "playcanvas";
 
 export class Bird extends Script {
 
-    // static attributes = {
-    //     flapVelocity: { type: 'number', default: 1 },
-    //     gravity: { type: 'number', default: 5 },
-    //     lowestHeight: { type: 'number', default: 0.25 },
-    //     radius: { type: 'number', default: 0.068 }
-    // }
+    /**
+     * @attribute
+     */
+    flapVelocity = 1
+
+    /**
+     * @attribute
+     */
+    gravity = 5
+
+    /**
+     * @attribute
+     */
+    lowestHeight = 0.25
+
+    /**
+     * @attribute
+     */
+    radius = 0.068
 
     // initialize code called once per entity
     initialize() {
         var app = this.app;
         
         this.velocity = 0;
-        this.state = 'getready';
+        this.state = 'getready';  
         this.paused = false;
 
         // Collision primitive for bird and pipe
@@ -179,7 +192,7 @@ export class Bird extends Script {
                 rect.x = min.x;
                 rect.y = min.y;
                 rect.w = max.x - min.x;
-                rect.h = (pipe.name === 'Pipe Top') ? 1000 : max.y - min.y;
+                rect.h = /* (pipe.name === 'Pipe Top') ? 1000 : */max.y - min.y;
 
                 if (this.circleRectangleIntersect(circle, rect)) {
                     this.die(true);

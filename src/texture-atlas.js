@@ -3,10 +3,6 @@ import { TextureAtlasHandler, FILTER_NEAREST, TextureAtlas, Vec4, Vec2, Texture,
 let atlas;
 
 const ATLAS_URL = '/images/spritesheet.png';
-const ATLAS_DATA = {
-  width: 453,
-  height: 256,
-}
 
 const atlasOpts = {
   "addressu": "clamp",
@@ -300,16 +296,4 @@ export const getAtlas = async (app) => {
     });
 
   })
-
-  // var spriteAsset = new pc.Asset('sprite', 'sprite', { url: '' });
-  // spriteAsset.resource = sprite;
-  // spriteAsset.loaded = true;
-  // app.assets.add(spriteAsset);
-
-  // atlas.frames = atlasOpts.frames
-  // Object.entries(atlasOpts.frames).forEach(([key, value]) => {
-  //   atlas.setFrame(key, value);
-  // })
-
-  // return atlas;
 };

@@ -14,6 +14,7 @@
 
 html, body {
   background-color: antiquewhite;
+  overflow: hidden;
   height: 100%;
 }
 
@@ -23,18 +24,41 @@ body {
   align-items: center;
 }
 
-#app {
-  /* width: 100%; */
+
+#app{
+  width: 100%;
   height: 100%;
-  padding: 3rem; /* Border around the canvas */
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.7);
+
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  box-sizing: border-box;
 }
 
-#canvas {
-  border-radius: 5vh;
-  height: 100%;
+#canvas{
+  width:100%;
+  max-width: calc(100vh * 9 / 16);
   aspect-ratio: 9 / 16;
-  display: block;
+  height:100%;
+}
+
+/* Styles for tablets and up */
+@media (min-width: 600px) {
+  #app {
+    padding: 20px;
+    padding: 3.5rem;
+  }
+
+  #canvas {
+      border-radius: 6vh;
+      box-shadow: 0.9vh 0.9vh 0px 0px rgb(224 200 169);
+      max-width: min-content;
+  }
 }

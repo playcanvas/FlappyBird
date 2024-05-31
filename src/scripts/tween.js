@@ -1,5 +1,5 @@
-import { Script, Vec2, Vec3, Color, Material } from 'playcanvas'
-import * as TWEEN from 'https://cdnjs.cloudflare.com/ajax/libs/tween.js/23.1.2/tween.esm.js'
+import { Script, Vec2, Vec3, Color, Material, Application } from 'playcanvas'
+import * as TWEEN from '@tweenjs/tween.js';
 import { TweenOptions } from './tween-config.js'
 
 
@@ -205,14 +205,4 @@ export class Tween extends Script {
 
 
 }
-
-// We have to update the tween.js engine somewhere once a frame...
-// var app = pc.Application.getApplication();
-// if (app) {
-//     app.on('update', function (dt) {
-//         TWEEN.update();
-//     });
-// }
-
-
 
