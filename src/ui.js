@@ -19,6 +19,10 @@ export const createUI = async (app) => {
     const atlas = await getAtlas(app);
     const layers = [app.scene.layers.getLayerByName("Sprite").id];
 
+    // Create an array of numerical Sprites 0-9
+    const numbers = ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29']
+            .map(key => new Sprite( app.graphicsDevice, { pixelsPerUnit: 100, frameKeys: [key], atlas, layers }));
+
     const ui = createEntity('ui', { parent });
 
     {
@@ -206,9 +210,6 @@ export const createUI = async (app) => {
             createEntity('Digit 3', { sprite: { layers }, position: [0, 0, 0] }),
         ]
 
-        const numbers = ['20', '21', '22', '23', '24', '25', '26', '27', '28', '29']
-            .map(key => new Sprite( app.graphicsDevice, { pixelsPerUnit: 100, frameKeys: [key], atlas, layers }));
-
         createEntity('Score', {
             position: [0, 0.86, 0],
             scripts: [{
@@ -222,29 +223,7 @@ export const createUI = async (app) => {
             children: display,
             parent: gameScreen
         });
-         
-        // const score = new Entity('Score');
-        // score.enabled = false;
-        // const display = [
-        //     new Entity('Digit 0'),
-        //     new Entity('Digit 1'),
-        //     new Entity('Digit 2'),
-        //     new Entity('Digit 3'),
-        // ].forEach(child => score.addChild(child))
 
-        // const numbers = [
-        //     // new Entity('Digit 0'),
-        //     // new Entity('Digit 1'),
-        //     // new Entity('Digit 2'),
-        //     // new Entity('Digit 3'),
-        // ]
-
-        // score.addComponent('script').create(Score, {
-        //     name: 'score',
-        //     display,
-        //     numbers
-        // });
-        // gameScreen.addChild(score);
 
         /**
          * Create the Get Ready text
@@ -285,33 +264,6 @@ export const createUI = async (app) => {
             parent: gameScreen
         });
 
-        // const getReady = new Entity('Get Ready');
-        // getReady.enabled = false;
-        // getReady.addComponent('sprite');
-        // getReady.addComponent('script')
-        // getReady.script.create(Tween, {
-        //     tweens: [
-        //         {
-        //             autoPlay: true,
-        //             event: 'ui:fadegetready',
-        //             path: 'sprite.opacity',
-        //             start: new Vec4(1),
-        //             end: new Vec4(0),
-        //             easingFunction: Easing.Linear,
-        //             easingType: EasingType.Out,
-        //             duration: 250,
-        //             repeat: 1,
-        //             yoyo: true,
-        //             repeatEvent: 'disable:getready'
-        //         }
-        //     ]
-        // });
-        // getReady.script.create(Enable, {
-        //     enableEvent: 'game:getready',
-        //     disableEvent: 'disable:getready'
-        // })
-        // gameScreen.addChild(getReady);
-
         /**
          * Create the Tap text
          */
@@ -351,31 +303,6 @@ export const createUI = async (app) => {
             ],
             parent: gameScreen
         });
-        // const tap = new Entity('Tap');
-        // tap.enabled = false;
-        // tap.addComponent('sprite');
-        // tap.addComponent('script')
-        // tap.script.create(Tween, {
-        //     tweens: [
-        //         {
-        //             autoPlay: false,
-        //             event: 'ui:fadegetready',
-        //             path: 'sprite.opacity',
-        //             start: new Vec4(1),
-        //             end: new Vec4(0),
-        //             easingFunction: Easing.Linear,
-        //             easingType: EasingType.Out,
-        //             duration: 250,
-        //             repeat: 1,
-        //             yoyo: true,
-        //             repeatEvent: 'disable:tap'
-        //         }
-        //     ]
-        // });
-        // tap.script.create(Enable, {
-        //     enableEvent: 'disable:getready',
-        //     disableEvent: 'disable:tap'
-        // });
 
     }
 
@@ -386,8 +313,6 @@ export const createUI = async (app) => {
         parent: ui,
         enabled: false
     });
-    // const gameOverScreen = new Entity('Game Over Screen');
-    // gameOverScreen.enabled = false;
 
     {
         /**
@@ -437,41 +362,6 @@ export const createUI = async (app) => {
             }],
         });
 
-        // const gameOver = new Entity('Game Over');
-        // gameOver.addComponent('sprite');
-        // gameOver.addComponent('script').create(Tween, {
-        //     tweens: [
-        //         {
-        //             autoPlay: false,
-        //             event: 'ui:fadeingameover',
-        //             path: 'localPosition',
-        //             start: new Vec4(0, 0.5),
-        //             end: new Vec4(0, 0.42),
-        //             easingFunction: Easing.Back,
-        //             easingType: EasingType.In,
-        //             delay: 500,
-        //             duration: 300,
-        //             repeat: 0,
-        //             yoyo: false
-        //         },
-        //         {
-        //             autoPlay: false,
-        //             event: 'ui:fadeingameover',
-        //             path: 'sprite.opacity',
-        //             start: new Vec4(0),
-        //             end: new Vec4(1),
-        //             easingFunction: Easing.Back,
-        //             easingType: EasingType.In,
-        //             delay: 500,
-        //             duration: 300,
-        //             repeat: 0,
-        //             yoyo: false
-                
-        //         }
-        //     ]
-        // });
-        // gameOverScreen.addChild(gameOver);
-
         /**
          * Create the Ok button
          */
@@ -489,14 +379,6 @@ export const createUI = async (app) => {
             }],
             parent: gameOverScreen
         });
-        // const okButton = new Entity('Ok Button');
-        // okButton.enabled = false;
-        // okButton.addComponent('script').create(Button, {
-        //     displacement: 0.0039063,
-        //     event: 'game:menu'
-        // });
-        // okButton.addComponent('sprite');
-        // gameOverScreen.addChild(okButton);
 
         /**
          * Create the Share button
@@ -515,14 +397,6 @@ export const createUI = async (app) => {
             }],
             parent: gameOverScreen
         });
-        // const shareButton = new Entity('Share Button');
-        // shareButton.enabled = false;
-        // shareButton.addComponent('script').create(Button, {
-        //     displacement: 0.0039063,
-        //     event: 'game:share'
-        // });
-        // shareButton.addComponent('sprite');
-        // gameOverScreen.addChild(shareButton);
 
         /**
          * Create the Scoreboard
@@ -559,29 +433,6 @@ export const createUI = async (app) => {
             ],
             parent: gameOverScreen
         });
-        // const scoreboard = new Entity('Scoreboard');
-        // scoreboard.enabled = false;
-        // scoreboard.addComponent('sprite');
-        // scoreboard.addComponent('script')
-        // scoreboard.script.create(Scoreboard);
-        // scoreboard.script.create(Tween, {
-        //     tweens: [
-        //         {
-        //             autoPlay: false,
-        //             event: 'ui:showscoreboard',
-        //             path: 'localPosition',
-        //             start: new Vec4(0, -1.7),
-        //             end: new Vec4(0, 0.02),
-        //             easingFunction: Easing.Quintic,
-        //             easingType: EasingType.Out,
-        //             delay: 1250,
-        //             duration: 500,
-        //             repeat: 0,
-        //             yoyo: false
-        //         }
-        //     ]
-        // });
-        // gameOverScreen.addChild(scoreboard);
 
         {
             /**
@@ -593,42 +444,31 @@ export const createUI = async (app) => {
                 children: [await createMedal(app)],
                 parent: scoreboard
             });
-            // const medal = createMedal();
-            // medal.enabled = false;
-            // scoreboard.addChild(medal);
+
 
             /**
              * Create the Current Score
              */
+
+            const display = [
+                createEntity('Digit 0', { sprite: { layers }, position: [-0.24, 0, 0] }),
+                createEntity('Digit 1', { sprite: { layers }, position: [-0.16, 0, 0] }),
+                createEntity('Digit 2', { sprite: { layers }, position: [-0.08, 0, 0] }),
+                createEntity('Digit 3', { sprite: { layers }, position: [0, 0, 0] }),
+            ]
+    
             createEntity('Current Score', {
                 scripts: [{
                     class: Score,
                     options: {
                         name: 'score',
-                        display: [
-                            // score.addChild(new Entity('Digit 0')),
-                            // score.addChild(new Entity('Digit 1')),
-                            // score.addChild(new Entity('Digit 2')),
-                            // score.addChild(new Entity('Digit 3')),
-                        ],
-                        numbers: []
+                        display,
+                        numbers
                     }
                 }],
                 parent: scoreboard
             });
-            // const score = new Entity('Current Score');
-            // score.addComponent('sprite');
-            // score.addComponent('script').create(Score, {
-            //     name: 'score',
-            //     display: [
-            //         score.addChild(new Entity('Digit 0')),
-            //         score.addChild(new Entity('Digit 1')),
-            //         score.addChild(new Entity('Digit 2')),
-            //         score.addChild(new Entity('Digit 3')),
-            //     ],
-            //     numbers: []
-            // });
-            // scoreboard.addChild(score);
+
 
             /**
              * Create the New text
@@ -642,10 +482,6 @@ export const createUI = async (app) => {
                 },
                 parent: scoreboard
             });
-            // const newScore = new Entity('New');
-            // newScore.enabled = false;
-            // newScore.addComponent('sprite');
-            // scoreboard.addChild(newScore);
 
             /**
              * Create the Best Score
@@ -655,31 +491,12 @@ export const createUI = async (app) => {
                     class: Score,
                     options: {
                         name: 'score',
-                        display: [
-                            // score.addChild(new Entity('Digit 0')),
-                            // score.addChild(new Entity('Digit 1')),
-                            // score.addChild(new Entity('Digit 2')),
-                            // score.addChild(new Entity('Digit 3')),
-                        ],
-                        numbers: []
+                        display,
+                        numbers
                     }
                 }],
                 parent: scoreboard
             });
-
-            // const bestScore = new Entity('Best Score');
-            // bestScore.addComponent('sprite');
-            // bestScore.addComponent('script').create(Score, {
-            //     name: 'score',
-            //     display: [
-            //         bestScore.addChild(new Entity('Digit 0')),
-            //         bestScore.addChild(new Entity('Digit 1')),
-            //         bestScore.addChild(new Entity('Digit 2')),
-            //         bestScore.addChild(new Entity('Digit 3')),
-            //     ],
-            //     numbers: []
-            // });
-            // scoreboard.addChild(bestScore);
 
         }
     }

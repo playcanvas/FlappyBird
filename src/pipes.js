@@ -45,8 +45,6 @@ export const createPipes = async (app) => {
         }
     }
 
-
-
     const pipe1 = createEntity('Pipe 1', {
         position: [-0.8, 0, 0],
         children: [
@@ -74,7 +72,6 @@ export const createPipes = async (app) => {
 
     const pipes = createEntity('Pipes', {
         position: [1.7, 0.1, 0],
-        // scripts: [{ class: AddToScore, options: { bird, pipe1, pipe2, pipe3 }}],
         children: [pipe1, pipe2, pipe3],
         scripts: [
             { class: Scroll, options: scrollDefaults }, 
@@ -82,9 +79,6 @@ export const createPipes = async (app) => {
         ],
         parent,
     });
-
-    // Late initialize
-    // pipes.script.pipeHeight.initialize();
-
+    
     return pipes;
 }
