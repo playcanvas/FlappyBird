@@ -1,5 +1,10 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+console.log('Running PC', process.env.VITE_PLAYCANVAS)
 
 export default defineConfig({
   plugins: [
@@ -12,7 +17,7 @@ export default defineConfig({
   ],
   resolve: {
       alias: {
-          playcanvas: "https://esm.sh/gh/playcanvas/engine@865fd8041c/src/index.js"
+          playcanvas: process.env.VITE_PLAYCANVAS
       }
   }
 })

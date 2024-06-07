@@ -28,17 +28,26 @@
     <!-- <meta name="twitter:image" content="https://example.com/image.jpg"> Replace with your actual image URL -->
     <meta name="twitter:site" content="@playcanvas"> <!-- Replace with your actual Twitter handle if available -->
 
+    <!-- CSS Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+
     <script type="importmap">
       {
         "imports": {
-          "playcanvas": "https://esm.sh/gh/playcanvas/engine@865fd8041c/src/index.js"
+          "playcanvas": "%VITE_PLAYCANVAS%"
         }
       }
     </script>
   </head>
   <body>
     <div id="app">
-      <canvas id="canvas"/>
+      <canvas id="canvas"></canvas>
+      <footer>
+        <span>Made with <a href="https://playcanvas.com" target="_blank">PlayCanvas</a></span>
+      </footer>
     </div>
     <script type="module" src="/main.js"></script>
   </body>
